@@ -1,25 +1,25 @@
 name: Unit tests
 
-  on:
-      push: 
-      branches: [main]
-    pull_request:
-      branches: [main]
+on:
+  push: 
+    branches: [main]
+  pull_request:
+    branches: [main]
   
-  jobs: 
-    code_style:
-      runs_on: ubuntu-latest
-      steps:
-        - uses: actions/checkout@v2
-        - uses: conda-incubator/setup-miniconda 
-          with: 
-            activate-environment: swe4s
-            environment-file: environment.yml
-        -run: pycodestyle $(git ls-files "*.py")
-    unit_tests:
-      runs_on: ubuntu_latest
-      steps:
-        - uses: actions/checkout@v2
-        - run: |
+jobs: 
+  code_style:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: conda-incubator/setup-miniconda@v2 
+        with: 
+          activate-environment: swe4s
+          environment-file: environment.yml
+      - run: pycodestyle $(git ls-files "*.py")
+  unit_tests:
+    runs-on: ubuntu_latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: |
             cd test/unit
             python -m unittest test_utils
